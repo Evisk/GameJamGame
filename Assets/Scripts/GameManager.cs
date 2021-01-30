@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using static System.Collections.Generic.Dictionary<string, int>;
 
@@ -23,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> playerCombatants = new List<GameObject>();
     public List<GameObject> enemyCombatants = new List<GameObject>();
+    public TMP_Text endBattleText;
 
     public List<StatSO> stats = new List<StatSO>();
 
@@ -55,7 +58,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        availablePoints = pointsPerRound;
         DontDestroyOnLoad(this);
     }
 
@@ -66,8 +68,7 @@ public class GameManager : MonoBehaviour
 
         SelectRandomEnemyTeam();
 
-
-        UIManager.Instance.ShowPreFight();        
+        this.AwardAdditionalPoints();
 
         Debug.Log($"Picked {team.Name}");
 	}
@@ -101,11 +102,6 @@ public class GameManager : MonoBehaviour
         return false;        
     }
 
-   public void ResetRound()
-    {
-        currentRound = 0;
-    }
-
     public bool IncreaseRound()
     {
         if(currentRound < 2)
@@ -119,11 +115,13 @@ public class GameManager : MonoBehaviour
 
     public void SelectRandomEnemyTeam()
     {
-        int enemy = Random.Range(0, this.EnemyTeams.Count);
+        int enemy = UnityEngine.Random.Range(0, this.EnemyTeams.Count);
         this.EnemyTeam = Instantiate(this.EnemyTeams[enemy]);
         this.EnemyTeams.RemoveAt(enemy);
 
         RandomEnemySecondaries();
+
+        UIManager.Instance.ShowPreFight();
     }
 
     public void RandomEnemySecondaries()
@@ -132,7 +130,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < numToDistribute; i++)
         {
-            int newStat = Random.Range(0, this.EnemyTeam.secondaryStats.Count);
+            int newStat = UnityEngine.Random.Range(0, this.EnemyTeam.secondaryStats.Count);
             this.EnemyTeam.secondaryStats[newStat].value += 1;
         }
     }
@@ -158,6 +156,7 @@ public class GameManager : MonoBehaviour
             playerCombatants[i].transform.position = playerStartPositions[i].transform.position;
             enemyCombatants[i].transform.position = enemyStartPositions[i].transform.position;
         }
+        this.endBattleText.text = "";
     }
 
     public void MoveToCombatPositions()
@@ -182,8 +181,8 @@ public class GameManager : MonoBehaviour
     {
         UIManager.Instance.ChangePreFight(false);
         battleField.SetActive(true);
-       // LoadTeamSprites();
-        ResetToStartPosition();
+        // LoadTeamSprites();
+        ResetBattle();
         StartCoroutine(Brawl());
     }
 
@@ -197,9 +196,47 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         yield return StartCoroutine(MoveToCombatPositionsRoutine(2.5f));       
         StartCoroutine(SpecialMoveRoutine());
+        yield return new WaitForSeconds(3f);
+
+        // show the brawl
+
+        var playerPoints = this.GetCombatPoints(this.SelectedTeam, this.EnemyTeam.teamName);
+        var enemyPoints = this.GetCombatPoints(this.EnemyTeam, this.SelectedTeam.teamName);
+
+        Debug.Log($"Player Points: {playerPoints:F2}, Enemy Points: {enemyPoints:F2}");
+
+        var win = playerPoints > enemyPoints;
+        if (win) {
+            this.endBattleText.text = "Victory!";
+		} else {
+            this.endBattleText.text = "Defeat!";
+        }
+
+        yield return new WaitForSeconds(2f);
+
+        battleField.SetActive(false);
+
+        if (win) {
+            this.currentRound++;
+            this.LockPoints();
+            this.AwardAdditionalPoints();
+            this.SelectRandomEnemyTeam();
+            if (this.currentRound == 3) {
+                Debug.Log("Epic victory!");
+			}
+        } else {
+            UIManager.Instance.ShowMainMenu();
+            this.ResetGame();
+        }
     }
 
-    public IEnumerator MoveToCombatPositionsRoutine(float totalTime)
+	private void LockPoints() {
+        foreach (var stat in this.SelectedTeam.secondaryStats) {
+            stat.lockedValue = stat.value;
+		}
+	}
+
+	public IEnumerator MoveToCombatPositionsRoutine(float totalTime)
     {
         var dt = 0f;
         while (dt < totalTime)
@@ -222,7 +259,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     public void Exit()
     {
         Application.Quit();
@@ -231,6 +267,33 @@ public class GameManager : MonoBehaviour
     public float GetStatMultiplier(StatisticName stat, TeamName enemyTeam) {
         return this.stats.Where(st => st.stat == stat).Single().GetMultiplier(enemyTeam);
 	}
+
+    public float GetCombatPoints(Team team, TeamName enemyTeam) {
+        var mainPoints = team.mainStats.Select(st => st.value).Sum();
+
+        var secondaryPoints = team.secondaryStats.Select(st => this.GetStatMultiplier(st.statName, enemyTeam) * st.value).Sum();
+
+        var result = mainPoints + secondaryPoints;
+
+        if (team.teamTactic == TeamTacticName.Defensive) {
+            result += UnityEngine.Random.Range(-6f, 6f);
+		} else {
+            result += UnityEngine.Random.Range(-3f, 3f);
+            result += 1f;
+        }
+
+        return result;
+	}
+
+	private void ResetGame() {
+        this.currentRound = 0;
+        this.availablePoints = 0;
+    }
+
+    private void ResetBattle() {
+        this.ResetToStartPosition();
+        this.endBattleText.text = "";
+    }
 }
 
 

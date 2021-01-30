@@ -26,22 +26,21 @@ public class TeamPanelController : MonoBehaviour
         tacticDropDown.onValueChanged.AddListener(indexer => {
             CurrentTeam.teamTactic = (TeamTacticName)indexer;        
         });
+	}
 
-        if (panelState == PanelState.Enemy)
-        {
+	private void OnEnable() {
+        if (panelState == PanelState.Enemy) {
             this.CurrentTeam = GameManager.Instance.EnemyTeam;
             tacticDropDown.interactable = false;
-        }
-        else if (panelState == PanelState.Player)
-        {
+        } else if (panelState == PanelState.Player) {
             tacticDropDown.interactable = false;
             this.CurrentTeam = GameManager.Instance.SelectedTeam;
         }
-            
-        this.LoadTeam(this.CurrentTeam);
-	}
 
-    public void LoadTeam(Team team)
+        this.LoadTeam(this.CurrentTeam);
+    }
+
+	public void LoadTeam(Team team)
     {
         this.CurrentTeam = team;
         TeamName.GetComponent<TextMeshProUGUI>().text = CurrentTeam.Name;
