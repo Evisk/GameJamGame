@@ -34,7 +34,7 @@ MonoBehaviour:
     their gaming project!
   CombatantSprite: {fileID: 21300000, guid: b5b298ac7b9a33044ad889791dcb3b7d, type: 3}
   VictoryImage: {fileID: 0}
-  teamTactic: 0
+  teamTactic: 1
   healthCurve:
     serializedVersion: 2
     m_Curve:
