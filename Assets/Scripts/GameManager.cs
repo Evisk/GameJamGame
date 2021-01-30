@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static System.Collections.Generic.Dictionary<string, int>;
 
 public class GameManager : MonoBehaviour
@@ -38,6 +39,14 @@ public class GameManager : MonoBehaviour
 
     public List<StatSO> stats = new List<StatSO>();
 
+    public TMP_Text playerTeamNameText;
+    public RectTransform playerTeamHealth;
+    public TMP_Text enemyTeamNameText;
+    public RectTransform enemyTeamHealth;
+
+    public Gradient healthGradient;
+
+    public TMP_Text lastResultText;
 
     public int availablePoints;
     public int currentRound = 0;
@@ -240,6 +249,8 @@ public class GameManager : MonoBehaviour
         battleField.SetActive(true);
         LoadTeamSprites();
         ResetBattle();
+        this.playerTeamNameText.text = this.SelectedTeam.Name;
+        this.enemyTeamNameText.text = this.EnemyTeam.Name;
         StartCoroutine(Brawl());
     }
 
@@ -279,9 +290,11 @@ public class GameManager : MonoBehaviour
         throwCombatantsPlayer.GetComponent<ParticleSystem>().Play();
         throwCombatantsEnemy.GetComponent<ParticleSystem>().Play();
 
-        var playerPoints = 100; //this.GetCombatPoints(this.SelectedTeam, this.EnemyTeam.teamName);
+        var playerPoints = this.GetCombatPoints(this.SelectedTeam, this.EnemyTeam.teamName);
         var enemyPoints = this.GetCombatPoints(this.EnemyTeam, this.SelectedTeam.teamName);
         var win = playerPoints > enemyPoints;
+
+        this.lastResultText.text = $"Last result:\n{playerPoints:F2} - {enemyPoints:F2}";
 
         yield return new WaitForSeconds(0.2f);
 
@@ -293,7 +306,29 @@ public class GameManager : MonoBehaviour
             this.victoryTeamAvatar.sprite = this.EnemyTeam.CombatantSprite;
         }
 
-        yield return new WaitForSeconds(10f);
+        // Do the awesome health bar thing
+
+        var totalTime = this.brawlCloud.GetComponent<ParticleSystem>().main.duration + 0.5f;
+        var dt = 0f;
+        var playerMin = win ? Mathf.Clamp((playerPoints - enemyPoints) / playerPoints, 0.1f, 1f)  : 0f;
+        var playerImage = this.playerTeamHealth.GetComponent<Image>();
+        var enemyMin = win == false ? Mathf.Clamp((enemyPoints - playerPoints) / enemyPoints, 0.1f, 1f) : 0f;
+        var enemyImage = this.enemyTeamHealth.GetComponent<Image>();
+        while (dt < totalTime) {
+            dt += Time.deltaTime;
+
+            var playerRatio = Mathf.Lerp(playerMin, 1f, this.SelectedTeam.healthCurve.Evaluate(dt / totalTime));
+            this.playerTeamHealth.anchorMin = new Vector2(1f - playerRatio, 0f);
+            playerImage.color = this.healthGradient.Evaluate(playerRatio);
+
+            var enemyRatio = Mathf.Lerp(enemyMin, 1f, this.EnemyTeam.healthCurve.Evaluate(dt / totalTime));
+            this.enemyTeamHealth.anchorMax = new Vector2(enemyRatio, 1f);
+            enemyImage.color = this.healthGradient.Evaluate(enemyRatio);
+
+            yield return null;
+		}
+
+        //yield return new WaitForSeconds(10f);
 
         // show the brawl
 
@@ -393,14 +428,18 @@ public class GameManager : MonoBehaviour
     private void ResetBattle() {
         this.ResetToStartPosition();
         this.endBattleText.text = "";
+
+        this.playerTeamHealth.anchorMin = new Vector2(0f, 0f);
+        this.playerTeamHealth.GetComponent<Image>().color = this.healthGradient.Evaluate(1f);
+
+        this.enemyTeamHealth.anchorMax = new Vector2(1f, 1f);
+        this.enemyTeamHealth.GetComponent<Image>().color = this.healthGradient.Evaluate(1f);
     }
 
     private void UpdateAvailablePoints() {
         this.remainingPointsText.text = $"Available points: <color=green>{this.availablePoints}</color>";
 	}
 }
-
-
 
 public enum StatisticName
 {

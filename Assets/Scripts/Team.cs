@@ -24,6 +24,7 @@ public class Team : ScriptableObject
     public Sprite VictoryImage;
     public TeamTacticName teamTactic = TeamTacticName.Defensive;
 
+    public AnimationCurve healthCurve;
 
     public bool IsStatisticLocked(StatisticName name,int newvalue)
     {

@@ -35,3 +35,45 @@ MonoBehaviour:
   CombatantSprite: {fileID: 21300000, guid: c259b53ef81eb354599877546af02154, type: 3}
   VictoryImage: {fileID: 0}
   teamTactic: 0
+  healthCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: -5.5906463
+      tangentMode: 65
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.083736904
+      value: 0.5318566
+      inSlope: -5.5906463
+      outSlope: -0.25739416
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5786013
+      value: 0.40448138
+      inSlope: -0.25739416
+      outSlope: -0.95985436
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.95985436
+      outSlope: 0
+      tangentMode: 5
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

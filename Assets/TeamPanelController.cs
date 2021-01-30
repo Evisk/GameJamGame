@@ -34,8 +34,9 @@ public class TeamPanelController : MonoBehaviour
             this.CurrentTeam = GameManager.Instance.EnemyTeam;
             tacticDropDown.interactable = false;
         } else if (panelState == PanelState.Player) {
-            tacticDropDown.interactable = false;
             this.CurrentTeam = GameManager.Instance.SelectedTeam;
+        } else if (panelState == PanelState.Pick) {
+            tacticDropDown.interactable = false;
         }
 
         this.LoadTeam(this.CurrentTeam);
