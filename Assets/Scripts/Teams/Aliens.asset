@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c22493be4f4c1c546a4063d1127398c1, type: 3}
   m_Name: Aliens
   m_EditorClassIdentifier: 
-  Name: 
+  Name: Aliens
   MainStatistics:
-    keys: []
-    values: 
+    keys:
+    - Stat1
+    - Stat2
+    - Stat3
+    - Stat4
+    values: 03000000050000000100000002000000
   SecondaryStatistics:
     keys: []
     values: 

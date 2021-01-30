@@ -19,10 +19,12 @@ MonoBehaviour:
     - Stat2
     - Stat3
     - Stat4
-    - Stat5
-    values: 0100000002000000030000000400000005000000
+    values: 01000000020000000300000004000000
   SecondaryStatistics:
-    keys: []
-    values: 
+    keys:
+    - SecStat1
+    - SecStat2
+    - SecStat3
+    values: 040000000200000001000000
   Description: 
   CombatantSprite: {fileID: 0}

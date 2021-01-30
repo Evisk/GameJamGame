@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -35,6 +36,14 @@ public class GameManager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
     }
+
+    public void SelectTeam(Team team) {
+        this.SelectedTeam = team;
+        this.EnemyTeams = this.teams.ToList();
+        this.EnemyTeams.Remove(team);
+
+        Debug.Log($"Picked {team.Name}");
+	}
 
     public void IncreaseStatistic(string name)
     {

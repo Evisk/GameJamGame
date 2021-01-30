@@ -52,6 +52,12 @@ public class UIManager : MonoBehaviour
         _creditsCanvas.SetActive(false);
     }
 
+    public void ShowTeams()
+    {
+        _mainMenuCanvas.SetActive(false);
+        _teamPickerCanvas.SetActive(true);
+    }
+
     public void ExitButtonClick()
     {
         GameManager.Instance.Exit();
