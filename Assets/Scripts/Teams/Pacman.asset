@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c22493be4f4c1c546a4063d1127398c1, type: 3}
   m_Name: Pacman
   m_EditorClassIdentifier: 
-  Name: Pacman Team
+  Name: Pac-Man Team
   teamName: 3
   mainStats:
   - statName: 0
@@ -30,6 +30,7 @@ MonoBehaviour:
     value: 0
   - statName: 6
     value: 0
-  Description: 
-  CombatantSprite: {fileID: 0}
+  Description: Pac-Man needs your help to escape from the maze!
+  CombatantSprite: {fileID: 21300000, guid: 5c7b469b12265c543847bb0bbfedfeec, type: 3}
+  VictoryImage: {fileID: 0}
   teamTactic: 1

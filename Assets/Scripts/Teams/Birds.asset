@@ -30,6 +30,8 @@ MonoBehaviour:
     value: 0
   - statName: 12
     value: 0
-  Description: 
-  CombatantSprite: {fileID: 0}
+  Description: A flock of birds are lost in their adventure between the Continents
+    and need your help to find their way back to the nest.
+  CombatantSprite: {fileID: 21300000, guid: 3ea3aef580b310249acf317f9bb87607, type: 3}
+  VictoryImage: {fileID: 0}
   teamTactic: 0

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TeamPanelController : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class TeamPanelController : MonoBehaviour
 
     private void Awake() {
 
-        tacticDropDown.options.Add(new TMP_Dropdown.OptionData(TeamTacticName.Aggresive.ToString()));
+        tacticDropDown.options.Add(new TMP_Dropdown.OptionData(TeamTacticName.Aggressive.ToString()));
         tacticDropDown.options.Add(new TMP_Dropdown.OptionData(TeamTacticName.Defensive.ToString()));
 
         tacticDropDown.onValueChanged.AddListener(indexer => {
@@ -45,6 +46,7 @@ public class TeamPanelController : MonoBehaviour
         this.CurrentTeam = team;
         TeamName.GetComponent<TextMeshProUGUI>().text = CurrentTeam.Name;
         Description.GetComponent<TextMeshProUGUI>().text = CurrentTeam.Description;
+        CombatantSprite.GetComponent<Image>().sprite = CurrentTeam.CombatantSprite;
 
         tacticDropDown.value = (int)team.teamTactic;
 

@@ -30,6 +30,7 @@ MonoBehaviour:
     value: 0
   - statName: 18
     value: 0
-  Description: 
-  CombatantSprite: {fileID: 0}
+  Description: Pirates are looking for a lost treasure.
+  CombatantSprite: {fileID: 21300000, guid: c82bbd7a89abea34eabc70e49ff3ea62, type: 3}
+  VictoryImage: {fileID: 21300000, guid: 0a3c4d392b33e5f43b330889f49fdf6b, type: 3}
   teamTactic: 0

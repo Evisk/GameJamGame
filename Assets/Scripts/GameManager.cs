@@ -22,10 +22,15 @@ public class GameManager : MonoBehaviour
     public List<GameObject> enemyBattlePositions = new List<GameObject>();
     public GameObject pointOfBattle;
     public GameObject battleField;
+    public GameObject brawlCloud;
+    public GameObject throwCombatantsPlayer;
+    public GameObject throwCombatantsEnemy;
 
     public List<GameObject> playerCombatants = new List<GameObject>();
     public List<GameObject> enemyCombatants = new List<GameObject>();
     public TMP_Text endBattleText;
+
+    public List<Material> throwMaterials = new List<Material>();
 
     public List<StatSO> stats = new List<StatSO>();
 
@@ -138,14 +143,50 @@ public class GameManager : MonoBehaviour
 
     public void LoadTeamSprites()
     {
-        foreach(GameObject combatant in playerCombatants)
+        float playerTeamFacingScale = GetFacingScaleAccordingToTeam(SelectedTeam.teamName,true);
+        float enemyTeamFacingScale = GetFacingScaleAccordingToTeam(EnemyTeam.teamName, false);
+
+        foreach (GameObject combatant in playerCombatants)
         {
             combatant.GetComponent<SpriteRenderer>().sprite = SelectedTeam.CombatantSprite;
+            Vector3 newScale = combatant.transform.localScale;
+            newScale.x = playerTeamFacingScale;
+            combatant.transform.localScale = newScale;
         }
 
         foreach (GameObject combatant in enemyCombatants)
         {
             combatant.GetComponent<SpriteRenderer>().sprite = EnemyTeam.CombatantSprite;
+            Vector3 newScale = combatant.transform.localScale;
+            newScale.x = enemyTeamFacingScale;
+            combatant.transform.localScale = newScale;
+        }
+    }
+
+    public float GetFacingScaleAccordingToTeam(TeamName teamName,bool player)
+    {
+
+        float positive = .5f;
+        float negative = -.5f;
+        switch (teamName)
+        {
+            case TeamName.Aliens:
+                return player ? positive : negative;
+
+            case TeamName.FlockOfBirds:
+                return player ? positive : negative;
+
+            case TeamName.GameJam:
+                return player ? positive : negative;
+
+            case TeamName.PacMan:
+                return player ? negative : positive;
+
+            case TeamName.Pirates:
+                return player ? negative : positive;
+
+            default:
+                return player ? negative : positive;
         }
     }
 
@@ -181,7 +222,7 @@ public class GameManager : MonoBehaviour
     {
         UIManager.Instance.ChangePreFight(false);
         battleField.SetActive(true);
-        // LoadTeamSprites();
+        LoadTeamSprites();
         ResetBattle();
         StartCoroutine(Brawl());
     }
@@ -191,16 +232,38 @@ public class GameManager : MonoBehaviour
         availablePoints += pointsPerRound;
     }
 
+    public Material GetThrowMaterial(TeamName team)
+    {
+        switch (team)
+        {
+            case TeamName.Aliens:
+                return throwMaterials[0];
+            case TeamName.FlockOfBirds:
+                return throwMaterials[1];
+            case TeamName.GameJam:
+                return throwMaterials[2];
+            case TeamName.PacMan:
+                return throwMaterials[3];
+            default:
+                return throwMaterials[4];
+        }
+    }
+
     public IEnumerator Brawl()
     {
         yield return new WaitForSeconds(.5f);
         yield return StartCoroutine(MoveToCombatPositionsRoutine(2.5f));       
-        StartCoroutine(SpecialMoveRoutine());
-        yield return new WaitForSeconds(3f);
+        yield return StartCoroutine(SpecialMoveRoutine(.75f));
+        brawlCloud.GetComponent<ParticleSystem>().Play();
+        throwCombatantsPlayer.GetComponent<ParticleSystemRenderer>().material = GetThrowMaterial(SelectedTeam.teamName);
+        throwCombatantsEnemy.GetComponent<ParticleSystemRenderer>().material = GetThrowMaterial(EnemyTeam.teamName);
+        throwCombatantsPlayer.GetComponent<ParticleSystem>().Play();
+        throwCombatantsEnemy.GetComponent<ParticleSystem>().Play();
+        yield return new WaitForSeconds(10f);
 
         // show the brawl
 
-        var playerPoints = this.GetCombatPoints(this.SelectedTeam, this.EnemyTeam.teamName);
+        var playerPoints = 100; //this.GetCombatPoints(this.SelectedTeam, this.EnemyTeam.teamName);
         var enemyPoints = this.GetCombatPoints(this.EnemyTeam, this.SelectedTeam.teamName);
 
         Debug.Log($"Player Points: {playerPoints:F2}, Enemy Points: {enemyPoints:F2}");
@@ -217,15 +280,22 @@ public class GameManager : MonoBehaviour
         battleField.SetActive(false);
 
         if (win) {
-            this.currentRound++;
-            this.LockPoints();
-            this.AwardAdditionalPoints();
-            this.SelectRandomEnemyTeam();
-            if (this.currentRound == 3) {
-                Debug.Log("Epic victory!");
-			}
+
+            if (this.currentRound == 2)
+            {
+                UIManager.Instance.ShowVictory();
+            }
+            else
+            {
+                this.currentRound++;
+                this.LockPoints();
+                this.AwardAdditionalPoints();
+                this.SelectRandomEnemyTeam();
+            }
+
+                      
         } else {
-            UIManager.Instance.ShowMainMenu();
+            UIManager.Instance.ShowTeams();
             this.ResetGame();
         }
     }
@@ -247,10 +317,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public IEnumerator SpecialMoveRoutine()
+    public IEnumerator SpecialMoveRoutine(float totalTime)
     {
         var dt = 0f;
-        var totalTime = 5f;
         while (dt < totalTime)
         {
             dt += Time.deltaTime;
@@ -275,7 +344,7 @@ public class GameManager : MonoBehaviour
 
         var result = mainPoints + secondaryPoints;
 
-        if (team.teamTactic == TeamTacticName.Defensive) {
+        if (team.teamTactic == TeamTacticName.Aggressive) {
             result += UnityEngine.Random.Range(-6f, 6f);
 		} else {
             result += UnityEngine.Random.Range(-3f, 3f);
@@ -323,7 +392,7 @@ public enum StatisticName
 
 public enum TeamTacticName
 {
-    Aggresive,
+    Aggressive,
     Defensive
 }
 

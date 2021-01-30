@@ -11,8 +11,12 @@ public class UIManager : MonoBehaviour
     public GameObject _creditsCanvas;
     public GameObject _teamPickerCanvas;
     public GameObject _preFightCanvas;
+    public GameObject _victoryCanvas;
+
+    public Image _victoryImage;
 
     public Button FIGHTBUTTON;
+    public Button backToMainMenuBtn;
 
     public static UIManager Instance
     {
@@ -41,6 +45,12 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.StartBattle();
         }));
 
+        backToMainMenuBtn.onClick.AddListener((UnityEngine.Events.UnityAction)(() =>
+        {
+            _victoryCanvas.SetActive(false);
+            ShowMainMenu();
+        }));
+
         DontDestroyOnLoad(this);
     }
 
@@ -66,6 +76,14 @@ public class UIManager : MonoBehaviour
     {
         _teamPickerCanvas.SetActive(false);
         _preFightCanvas.SetActive(true);
+    }
+
+    public void ShowVictory()
+    {
+        GameManager.Instance.battleField.SetActive(false);
+        _victoryImage.sprite = GameManager.Instance.SelectedTeam.VictoryImage;
+        _victoryCanvas.SetActive(true);
+       
     }
 
     public void ChangePreFight(bool show)

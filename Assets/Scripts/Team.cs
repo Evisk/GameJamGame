@@ -21,6 +21,7 @@ public class Team : ScriptableObject
     [TextArea(3, 50)]
     public string Description;
     public Sprite CombatantSprite;
+    public Sprite VictoryImage;
     public TeamTacticName teamTactic = TeamTacticName.Defensive;
 
 
