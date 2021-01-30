@@ -26,13 +26,18 @@ public class GameManager : MonoBehaviour
     public GameObject throwCombatantsPlayer;
     public GameObject throwCombatantsEnemy;
 
+    public TMP_Text remainingPointsText;
+
     public List<GameObject> playerCombatants = new List<GameObject>();
     public List<GameObject> enemyCombatants = new List<GameObject>();
     public TMP_Text endBattleText;
+    public ParticleSystem victoryParticleSystem;
+    public SpriteRenderer victoryTeamAvatar;
 
     public List<Material> throwMaterials = new List<Material>();
 
     public List<StatSO> stats = new List<StatSO>();
+
 
     public int availablePoints;
     public int currentRound = 0;
@@ -88,6 +93,7 @@ public class GameManager : MonoBehaviour
         {
             statData.value = newStat;
             availablePoints++;
+            this.UpdateAvailablePoints();
             return true;
         }
 
@@ -101,6 +107,7 @@ public class GameManager : MonoBehaviour
         {
             statData.value++;
             availablePoints--;
+            this.UpdateAvailablePoints();
             return true;
         }
 
@@ -198,6 +205,15 @@ public class GameManager : MonoBehaviour
             enemyCombatants[i].transform.position = enemyStartPositions[i].transform.position;
         }
         this.endBattleText.text = "";
+        this.victoryTeamAvatar.sprite = null;
+    }
+
+    public void MoveOffScreen() {
+        var pos = new Vector3(1000, 1000, -100);
+        for (int i = 0; i < playerCombatants.Count; i++) {
+            playerCombatants[i].transform.position = pos;
+            enemyCombatants[i].transform.position = pos;
+        }
     }
 
     public void MoveToCombatPositions()
@@ -230,6 +246,7 @@ public class GameManager : MonoBehaviour
     public void AwardAdditionalPoints()
     {
         availablePoints += pointsPerRound;
+        this.UpdateAvailablePoints();
     }
 
     public Material GetThrowMaterial(TeamName team)
@@ -253,24 +270,38 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.5f);
         yield return StartCoroutine(MoveToCombatPositionsRoutine(2.5f));       
-        yield return StartCoroutine(SpecialMoveRoutine(.75f));
+        StartCoroutine(SpecialMoveRoutine(.75f));
+        yield return new WaitForSeconds(0.5f);
+
         brawlCloud.GetComponent<ParticleSystem>().Play();
         throwCombatantsPlayer.GetComponent<ParticleSystemRenderer>().material = GetThrowMaterial(SelectedTeam.teamName);
         throwCombatantsEnemy.GetComponent<ParticleSystemRenderer>().material = GetThrowMaterial(EnemyTeam.teamName);
         throwCombatantsPlayer.GetComponent<ParticleSystem>().Play();
         throwCombatantsEnemy.GetComponent<ParticleSystem>().Play();
+
+        var playerPoints = 100; //this.GetCombatPoints(this.SelectedTeam, this.EnemyTeam.teamName);
+        var enemyPoints = this.GetCombatPoints(this.EnemyTeam, this.SelectedTeam.teamName);
+        var win = playerPoints > enemyPoints;
+
+        yield return new WaitForSeconds(0.2f);
+
+        this.MoveOffScreen();
+
+        if (win) {
+            this.victoryTeamAvatar.sprite = this.SelectedTeam.CombatantSprite;
+        } else {
+            this.victoryTeamAvatar.sprite = this.EnemyTeam.CombatantSprite;
+        }
+
         yield return new WaitForSeconds(10f);
 
         // show the brawl
 
-        var playerPoints = 100; //this.GetCombatPoints(this.SelectedTeam, this.EnemyTeam.teamName);
-        var enemyPoints = this.GetCombatPoints(this.EnemyTeam, this.SelectedTeam.teamName);
-
         Debug.Log($"Player Points: {playerPoints:F2}, Enemy Points: {enemyPoints:F2}");
 
-        var win = playerPoints > enemyPoints;
         if (win) {
             this.endBattleText.text = "Victory!";
+            this.victoryParticleSystem.Play();
 		} else {
             this.endBattleText.text = "Defeat!";
         }
@@ -280,7 +311,6 @@ public class GameManager : MonoBehaviour
         battleField.SetActive(false);
 
         if (win) {
-
             if (this.currentRound == 2)
             {
                 UIManager.Instance.ShowVictory();
@@ -357,12 +387,17 @@ public class GameManager : MonoBehaviour
 	private void ResetGame() {
         this.currentRound = 0;
         this.availablePoints = 0;
+        this.UpdateAvailablePoints();
     }
 
     private void ResetBattle() {
         this.ResetToStartPosition();
         this.endBattleText.text = "";
     }
+
+    private void UpdateAvailablePoints() {
+        this.remainingPointsText.text = $"Available points: <color=green>{this.availablePoints}</color>";
+	}
 }
 
 

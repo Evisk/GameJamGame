@@ -52,4 +52,41 @@ public class Helper : MonoBehaviour {
         }
     }
     #endif
+
+    public static string GetStatName(StatisticName stat) {
+        switch (stat) {
+            case StatisticName.ALCowRustling:
+                return "Cow Rustling";
+            case StatisticName.ALCropCircleDrawing:
+                return "Crop Circle Drawing";
+            case StatisticName.ALGlutimusMaximusExploration:
+                return "Glutimus Maximus Exploration";
+            case StatisticName.FBLeadership:
+                return "Leadership";
+            case StatisticName.FBNaturalMiniBombs:
+                return "Natural Mini-Bombs";
+            case StatisticName.FBNavigation:
+                return "Navigation";
+            case StatisticName.GJGadgetWidgets:
+                return "Gadgets / Widgets";
+            case StatisticName.GJHackerTools:
+                return "Hacker Tools";
+            case StatisticName.GJInspiration:
+                return "Inspiration";
+            case StatisticName.PMAppetite:
+                return "Appetite";
+            case StatisticName.PMMazeArcadePower:
+                return "Maze Arcade Power";
+            case StatisticName.PMStealth:
+                return "Stealth";
+            case StatisticName.PPillagingLooting:
+                return "Pillaging / Looting";
+            case StatisticName.PPirateCodex:
+                return "Pirate Codex";
+            case StatisticName.PWeaponry:
+                return "Weaponry";
+            default:
+                return stat.ToString();
+		}
+	}
 }

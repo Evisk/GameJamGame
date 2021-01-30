@@ -53,7 +53,13 @@ public class StatisticUI : MonoBehaviour {
 	}
 
 	public void Initialize(StatisticName statName, int level, bool isMain) {
-		this.statName.text = statName.ToString();
+		this.statName.text = Helper.GetStatName(statName);
+		if (statName == StatisticName.ALGlutimusMaximusExploration) {
+			this.statName.margin = new Vector4(-50f, 0f, 0f, 0f);
+		} else {
+			this.statName.margin = new Vector4(0f, 0f, 0f, 0f);
+		}
+
 		this.statNameEnum = statName;
 		this.currentLevel = level;
 		if (isMain) {

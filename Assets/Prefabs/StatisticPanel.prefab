@@ -628,12 +628,12 @@ MonoBehaviour:
   m_fontSize: 30
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -881,3 +881,4 @@ MonoBehaviour:
   increaseButton: {fileID: 4177170967307044260}
   decreaseButton: {fileID: 4177170965636600542}
   fillBarTransform: {fileID: 3054842721168942617}
+  statNameEnum: 0

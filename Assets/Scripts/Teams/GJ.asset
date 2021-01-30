@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c22493be4f4c1c546a4063d1127398c1, type: 3}
   m_Name: GJ
   m_EditorClassIdentifier: 
-  Name: Game Jam
+  Name: Game Jammers
   teamName: 2
   mainStats:
   - statName: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
     value: 0
   - statName: 9
     value: 0
-  Description: Computer Scientist Enthusiasts are struggling with time to complete
+  Description: Computer scientist enthusiasts are struggling with time to complete
     their gaming project!
   CombatantSprite: {fileID: 21300000, guid: b5b298ac7b9a33044ad889791dcb3b7d, type: 3}
   VictoryImage: {fileID: 0}
