@@ -12,12 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c22493be4f4c1c546a4063d1127398c1, type: 3}
   m_Name: Birds
   m_EditorClassIdentifier: 
-  Name: 
-  MainStatistics:
-    keys: []
-    values: 
-  SecondaryStatistics:
-    keys: []
-    values: 
+  Name: Flock of Birds
+  mainStats:
+  - statName: 0
+    value: 0
+  - statName: 1
+    value: 0
+  - statName: 2
+    value: 0
+  - statName: 3
+    value: 0
+  secondaryStats:
+  - statName: 10
+    value: 0
+  - statName: 11
+    value: 0
+  - statName: 12
+    value: 0
   Description: 
   CombatantSprite: {fileID: 0}
+  teamTactic: 0

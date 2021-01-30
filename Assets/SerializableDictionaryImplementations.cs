@@ -13,3 +13,4 @@ public class StringIntDictionary : SerializableDictionary<string, int> {}
 // ---------------
 [Serializable]
 public class GameObjectFloatDictionary : SerializableDictionary<GameObject, float> {}
+

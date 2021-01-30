@@ -13,18 +13,22 @@ MonoBehaviour:
   m_Name: GJ
   m_EditorClassIdentifier: 
   Name: Game Jam
-  MainStatistics:
-    keys:
-    - Stat1
-    - Stat2
-    - Stat3
-    - Stat4
-    values: 01000000020000000300000004000000
-  SecondaryStatistics:
-    keys:
-    - SecStat1
-    - SecStat2
-    - SecStat3
-    values: 040000000200000001000000
+  mainStats:
+  - statName: 0
+    value: 0
+  - statName: 1
+    value: 0
+  - statName: 2
+    value: 0
+  - statName: 3
+    value: 0
+  secondaryStats:
+  - statName: 7
+    value: 0
+  - statName: 8
+    value: 0
+  - statName: 9
+    value: 0
   Description: 
   CombatantSprite: {fileID: 0}
+  teamTactic: 1

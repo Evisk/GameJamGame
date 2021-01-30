@@ -13,15 +13,21 @@ MonoBehaviour:
   m_Name: Aliens
   m_EditorClassIdentifier: 
   Name: Aliens
-  MainStatistics:
-    keys:
-    - Stat1
-    - Stat2
-    - Stat3
-    - Stat4
-    values: 03000000050000000100000002000000
-  SecondaryStatistics:
-    keys: []
-    values: 
+  mainStats:
+  - statName: 0
+    value: 0
+  - statName: 1
+    value: 0
+  - statName: 2
+    value: 0
+  - statName: 3
+    value: 0
+  secondaryStats:
+  - statName: 13
+    value: 0
+  - statName: 14
+    value: 0
+  - statName: 15
+    value: 0
   Description: 
   CombatantSprite: {fileID: 0}

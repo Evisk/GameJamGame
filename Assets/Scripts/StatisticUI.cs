@@ -13,20 +13,30 @@ public class StatisticUI : MonoBehaviour {
 	public Button increaseButton;
 	public Button decreaseButton;
 	public RectTransform fillBarTransform;
+	public StatisticName statNameEnum;
 
 	private int currentLevel = 0;
 
 	private void Awake() {
-		this.increaseButton.onClick.AddListener(() => {
-			this.currentLevel++;
-			this.currentLevel = Mathf.Clamp(this.currentLevel, 0, MaxLevel);
-			this.UpdateUI();
-		});
-		this.decreaseButton.onClick.AddListener(() => {
-			this.currentLevel--;
-			this.currentLevel = Mathf.Clamp(this.currentLevel, 0, MaxLevel);
-			this.UpdateUI();
-		});
+		this.increaseButton.onClick.AddListener((UnityEngine.Events.UnityAction)(() => {
+			if(GameManager.Instance.IncreaseStatistic(statNameEnum))
+            {
+                
+				this.currentLevel++;
+				this.currentLevel = Mathf.Clamp(this.currentLevel, 0, MaxLevel);
+				this.UpdateUI();
+			}
+			
+		}));
+		this.decreaseButton.onClick.AddListener((UnityEngine.Events.UnityAction)(() => {
+            if (GameManager.Instance.DecreaseStatistic(statNameEnum))
+            {
+				this.currentLevel--;
+				this.currentLevel = Mathf.Clamp(this.currentLevel, 0, MaxLevel);
+				this.UpdateUI();
+			}
+			
+		}));
 		this.UpdateUI();
 	}
 
@@ -42,8 +52,9 @@ public class StatisticUI : MonoBehaviour {
 		this.fillBarTransform.anchorMax = new Vector2((float)this.currentLevel / MaxLevel, 1f);
 	}
 
-	public void Initialize(string statName, int level, bool isMain) {
-		this.statName.text = statName;
+	public void Initialize(StatisticName statName, int level, bool isMain) {
+		this.statName.text = statName.ToString();
+		this.statNameEnum = statName;
 		this.currentLevel = level;
 		if (isMain) {
 			this.increaseButton.gameObject.SetActive(false);

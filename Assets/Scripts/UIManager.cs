@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -9,11 +10,9 @@ public class UIManager : MonoBehaviour
     public GameObject _mainMenuCanvas;
     public GameObject _creditsCanvas;
     public GameObject _teamPickerCanvas;
+    public GameObject _preFightCanvas;
 
-    public GameObject _teamPanel;
-
-    public Color statisticEmpty;
-    public Color statisticFull;
+    public Button FIGHTBUTTON;
 
     public static UIManager Instance
     {
@@ -37,6 +36,11 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
+        FIGHTBUTTON.onClick.AddListener((UnityEngine.Events.UnityAction)(() =>
+        {
+            GameManager.Instance.StartBattle();
+        }));
+
         DontDestroyOnLoad(this);
     }
 
@@ -56,6 +60,17 @@ public class UIManager : MonoBehaviour
     {
         _mainMenuCanvas.SetActive(false);
         _teamPickerCanvas.SetActive(true);
+    }
+
+    public void ShowPreFight()
+    {
+        _teamPickerCanvas.SetActive(false);
+        _preFightCanvas.SetActive(true);
+    }
+
+    public void ChangePreFight(bool show)
+    {
+        _preFightCanvas.SetActive(show);
     }
 
     public void ExitButtonClick()

@@ -14,7 +14,30 @@ public class TeamPanelController : MonoBehaviour
     public StatisticUI[] MainStatistics;
     public StatisticUI[] SecondaryStatistics;
 
+    public PanelState panelState;
+
+    public TMP_Dropdown tacticDropDown;
+
     private void Awake() {
+
+        tacticDropDown.options.Add(new TMP_Dropdown.OptionData(TeamTacticName.Aggresive.ToString()));
+        tacticDropDown.options.Add(new TMP_Dropdown.OptionData(TeamTacticName.Defensive.ToString()));
+
+        tacticDropDown.onValueChanged.AddListener(indexer => {
+            CurrentTeam.teamTactic = (TeamTacticName)indexer;        
+        });
+
+        if (panelState == PanelState.Enemy)
+        {
+            this.CurrentTeam = GameManager.Instance.EnemyTeam;
+            tacticDropDown.interactable = false;
+        }
+        else if (panelState == PanelState.Player)
+        {
+            tacticDropDown.interactable = false;
+            this.CurrentTeam = GameManager.Instance.SelectedTeam;
+        }
+            
         this.LoadTeam(this.CurrentTeam);
 	}
 
@@ -24,22 +47,19 @@ public class TeamPanelController : MonoBehaviour
         TeamName.GetComponent<TextMeshProUGUI>().text = CurrentTeam.Name;
         Description.GetComponent<TextMeshProUGUI>().text = CurrentTeam.Description;
 
+        tacticDropDown.value = (int)team.teamTactic;
+
         int index = 0;
-        foreach (var statPair in team._mainStatistics) {
-            this.MainStatistics[index].Initialize(statPair.Key, statPair.Value, true);
+        foreach (var statPair in team.mainStats) {
+            this.MainStatistics[index].Initialize(statPair.statName, statPair.value, true);
             index++;
 		}
 
         index = 0;
-        foreach (var statPair in team._secondaryStatistics) {
-            this.SecondaryStatistics[index].Initialize(statPair.Key, statPair.Value, false);
+        foreach (var statPair in team.secondaryStats) {
+            this.SecondaryStatistics[index].Initialize(statPair.statName, statPair.value, panelState != PanelState.Player);
             index++;
         }
-
-        //foreach(Transform statistic in MainStatistics.transform)
-        //{
-
-        //}
     }
 
 

@@ -13,16 +13,21 @@ MonoBehaviour:
   m_Name: Pirates
   m_EditorClassIdentifier: 
   Name: Pirates
-  MainStatistics:
-    keys:
-    - Stat1
-    - Stat2
-    - Stat3
-    - Stat4
-    - Stat5
-    values: 0500000002000000010000000300000004000000
-  SecondaryStatistics:
-    keys: []
-    values: 
+  mainStats:
+  - statName: 0
+    value: 0
+  - statName: 1
+    value: 0
+  - statName: 2
+    value: 0
+  - statName: 3
+    value: 0
+  secondaryStats:
+  - statName: 16
+    value: 0
+  - statName: 17
+    value: 0
+  - statName: 18
+    value: 0
   Description: 
   CombatantSprite: {fileID: 0}

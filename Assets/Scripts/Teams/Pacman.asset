@@ -13,11 +13,22 @@ MonoBehaviour:
   m_Name: Pacman
   m_EditorClassIdentifier: 
   Name: Pacman Team
-  MainStatistics:
-    keys: []
-    values: 
-  SecondaryStatistics:
-    keys: []
-    values: 
+  mainStats:
+  - statName: 0
+    value: 0
+  - statName: 1
+    value: 0
+  - statName: 2
+    value: 0
+  - statName: 3
+    value: 0
+  secondaryStats:
+  - statName: 4
+    value: 0
+  - statName: 5
+    value: 0
+  - statName: 6
+    value: 0
   Description: 
   CombatantSprite: {fileID: 0}
+  teamTactic: 1
