@@ -8,9 +8,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="Team")]
 public class Team : ScriptableObject
 {
-
-
     public string Name;
+
+    public TeamName teamName;
 
     [SerializeField]
     public List<StatData> mainStats = new List<StatData>();

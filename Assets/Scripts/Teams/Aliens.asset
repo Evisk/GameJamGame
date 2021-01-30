@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: Aliens
   m_EditorClassIdentifier: 
   Name: Aliens
+  teamName: 0
   mainStats:
   - statName: 0
-    value: 0
+    value: 2
   - statName: 1
-    value: 0
+    value: 5
   - statName: 2
-    value: 0
+    value: 3
   - statName: 3
-    value: 0
+    value: 5
   secondaryStats:
   - statName: 13
     value: 0
@@ -31,3 +32,4 @@ MonoBehaviour:
     value: 0
   Description: 
   CombatantSprite: {fileID: 0}
+  teamTactic: 0

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 868973aa0b4422042a2573396ef53992, type: 3}
+  m_Name: GJGadgetWidgets
+  m_EditorClassIdentifier: 
+  stat: 7
+  effectiveness:
+  - team: 0
+    effectiveness: 100
+  - team: 1
+    effectiveness: 25
+  - team: 2
+    effectiveness: 0
+  - team: 3
+    effectiveness: 75
+  - team: 4
+    effectiveness: 50

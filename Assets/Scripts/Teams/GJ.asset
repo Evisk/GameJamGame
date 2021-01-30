@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: GJ
   m_EditorClassIdentifier: 
   Name: Game Jam
+  teamName: 2
   mainStats:
   - statName: 0
-    value: 0
+    value: 3
   - statName: 1
-    value: 0
+    value: 4
   - statName: 2
-    value: 0
+    value: 4
   - statName: 3
-    value: 0
+    value: 4
   secondaryStats:
   - statName: 7
     value: 0

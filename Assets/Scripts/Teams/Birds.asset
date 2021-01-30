@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: Birds
   m_EditorClassIdentifier: 
   Name: Flock of Birds
+  teamName: 1
   mainStats:
   - statName: 0
-    value: 0
+    value: 5
   - statName: 1
-    value: 0
+    value: 2
   - statName: 2
-    value: 0
+    value: 4
   - statName: 3
-    value: 0
+    value: 3
   secondaryStats:
   - statName: 10
     value: 0

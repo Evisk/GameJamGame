@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: Pacman
   m_EditorClassIdentifier: 
   Name: Pacman Team
+  teamName: 3
   mainStats:
   - statName: 0
-    value: 0
+    value: 3
   - statName: 1
-    value: 0
+    value: 5
   - statName: 2
-    value: 0
+    value: 5
   - statName: 3
-    value: 0
+    value: 3
   secondaryStats:
   - statName: 4
     value: 0

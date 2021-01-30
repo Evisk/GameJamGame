@@ -22,7 +22,9 @@ public class GameManager : MonoBehaviour
     public GameObject battleField;
 
     public List<GameObject> playerCombatants = new List<GameObject>();
-    public List<GameObject> enemyCombatants = new List<GameObject>(); 
+    public List<GameObject> enemyCombatants = new List<GameObject>();
+
+    public List<StatSO> stats = new List<StatSO>();
 
     public int availablePoints;
     public int currentRound = 0;
@@ -226,7 +228,9 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-
+    public float GetStatMultiplier(StatisticName stat, TeamName enemyTeam) {
+        return this.stats.Where(st => st.stat == stat).Single().GetMultiplier(enemyTeam);
+	}
 }
 
 
