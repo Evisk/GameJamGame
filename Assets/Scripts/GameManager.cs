@@ -349,6 +349,7 @@ public class GameManager : MonoBehaviour
             if (this.currentRound == 2)
             {
                 UIManager.Instance.ShowVictory();
+                this.ResetGame();
             }
             else
             {
