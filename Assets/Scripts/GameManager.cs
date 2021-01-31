@@ -256,7 +256,7 @@ public class GameManager : MonoBehaviour
 
     public void AwardAdditionalPoints()
     {
-        availablePoints += pointsPerRound;
+        availablePoints += pointsPerRound + 1;
         this.UpdateAvailablePoints();
     }
 
@@ -409,12 +409,15 @@ public class GameManager : MonoBehaviour
 
         var result = mainPoints + secondaryPoints;
 
+        var rng = UnityEngine.Random.Range(-1f, 1f);
+
         if (team.teamTactic == TeamTacticName.Aggressive) {
-            result += UnityEngine.Random.Range(-6f, 6f);
+            rng *= 2f;
 		} else {
-            result += UnityEngine.Random.Range(-3f, 3f);
-            result += 1f;
+            result += 0.5f;
         }
+
+        result += rng;
 
         return result;
 	}
