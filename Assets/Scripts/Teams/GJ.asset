@@ -33,7 +33,7 @@ MonoBehaviour:
   Description: Computer scientist enthusiasts are struggling with time to complete
     their gaming project!
   CombatantSprite: {fileID: 21300000, guid: b5b298ac7b9a33044ad889791dcb3b7d, type: 3}
-  VictoryImage: {fileID: 0}
+  VictoryImage: {fileID: 21300000, guid: 758ba568e95e40a4ca41c7641969a4e8, type: 3}
   teamTactic: 1
   healthCurve:
     serializedVersion: 2

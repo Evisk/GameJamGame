@@ -302,8 +302,14 @@ public class GameManager : MonoBehaviour
 
         if (win) {
             this.victoryTeamAvatar.sprite = this.SelectedTeam.CombatantSprite;
+            Vector3 newScale = victoryTeamAvatar.transform.localScale;
+            newScale.x = GetFacingScaleAccordingToTeam(SelectedTeam.teamName, true);
+            victoryTeamAvatar.transform.localScale = newScale;
         } else {
             this.victoryTeamAvatar.sprite = this.EnemyTeam.CombatantSprite;
+            Vector3 newScale = victoryTeamAvatar.transform.localScale;
+            newScale.x = GetFacingScaleAccordingToTeam(EnemyTeam.teamName, true);
+            victoryTeamAvatar.transform.localScale = newScale;
         }
 
         // Do the awesome health bar thing
@@ -361,7 +367,7 @@ public class GameManager : MonoBehaviour
 
                       
         } else {
-            UIManager.Instance.ShowTeams();
+            UIManager.Instance.ShowDefeat();
             this.ResetGame();
         }
     }

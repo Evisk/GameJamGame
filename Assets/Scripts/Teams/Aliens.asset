@@ -33,7 +33,7 @@ MonoBehaviour:
   Description: Aliens must find their spaceship because they want to get back to
     their Galaxy.
   CombatantSprite: {fileID: 21300000, guid: c259b53ef81eb354599877546af02154, type: 3}
-  VictoryImage: {fileID: 0}
+  VictoryImage: {fileID: 21300000, guid: 3fb19f9561b7b2d44902144a294e8151, type: 3}
   teamTactic: 0
   healthCurve:
     serializedVersion: 2

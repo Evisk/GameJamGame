@@ -68,7 +68,7 @@ public class Helper : MonoBehaviour {
             case StatisticName.FBNavigation:
                 return "Navigation";
             case StatisticName.GJGadgetWidgets:
-                return "Gadgets / Widgets";
+                return "Gadgets";
             case StatisticName.GJHackerTools:
                 return "Hacker Tools";
             case StatisticName.GJInspiration:
@@ -80,7 +80,7 @@ public class Helper : MonoBehaviour {
             case StatisticName.PMStealth:
                 return "Stealth";
             case StatisticName.PPillagingLooting:
-                return "Pillaging / Looting";
+                return "Looting";
             case StatisticName.PPirateCodex:
                 return "Pirate Codex";
             case StatisticName.PWeaponry:

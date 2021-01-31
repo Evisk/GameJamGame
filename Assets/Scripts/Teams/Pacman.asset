@@ -32,7 +32,7 @@ MonoBehaviour:
     value: 0
   Description: Pac-Men need your help to escape from the maze!
   CombatantSprite: {fileID: 21300000, guid: 5c7b469b12265c543847bb0bbfedfeec, type: 3}
-  VictoryImage: {fileID: 0}
+  VictoryImage: {fileID: 21300000, guid: 6d21b5f3ae68264479a09867e033c83a, type: 3}
   teamTactic: 1
   healthCurve:
     serializedVersion: 2
